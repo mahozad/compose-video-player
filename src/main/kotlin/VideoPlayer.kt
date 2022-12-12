@@ -107,7 +107,7 @@ class VideoPlayerClass(
             )
             val audioInfo = DataLine.Info(SourceDataLine::class.java, audioFormat)
             soundLine = AudioSystem.getLine(audioInfo) as SourceDataLine
-            soundLine!!.open(audioFormat)
+            soundLine!!.open(audioFormat, /* 8820 */ /* See https://stackoverflow.com/a/6994265 */)
             soundLine!!.start()
 
             var frame = audioGrabber.grabSamples()
