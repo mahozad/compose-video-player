@@ -26,6 +26,8 @@ import javax.sound.sampled.AudioFormat
 import javax.sound.sampled.AudioSystem
 import javax.sound.sampled.DataLine
 import javax.sound.sampled.SourceDataLine
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun VideoPlayer(url: String, width: Int, height: Int) {
@@ -57,6 +59,7 @@ class VideoPlayerClass(
     private var soundLine: SourceDataLine? = null
     private val _videoFrames = MutableStateFlow<ImageBitmap?>(null)
     private val _timestamp = MutableStateFlow<Long>(0)
+    private var isResumed = true
     val videoFrames = _videoFrames.asStateFlow()
     val timestamp = _timestamp.asStateFlow()
 
@@ -85,6 +88,7 @@ class VideoPlayerClass(
             var image: Frame? = videoGrabber.grabImage() // The simple grab() function may return audio frame as well
             val startTime = System.nanoTime() / 1000 - image!!.timestamp
             while (image != null) {
+                while (!isResumed) delay(50.milliseconds)
                 val bitmap = imageConverter.convert(image).toComposeImageBitmap()
                 _videoFrames.value = bitmap
                 val delay = (image.timestamp - (System.nanoTime() / 1000 - startTime)) / 1000
@@ -112,6 +116,7 @@ class VideoPlayerClass(
 
             var frame = audioGrabber.grabSamples()
             while (frame != null) {
+                while (!isResumed) delay(50.milliseconds)
                 val channelSamplesShortBuffer = frame.samples[0] as ShortBuffer
                 channelSamplesShortBuffer.rewind()
                 val outBuffer = ByteBuffer.allocate(channelSamplesShortBuffer.capacity() * 2)
@@ -123,6 +128,18 @@ class VideoPlayerClass(
                 frame = audioGrabber.grabSamples()
                 _timestamp.value = frame.timestamp / 1_000
             }
+        }
+
+
+
+
+
+        // REMOVEME: Artificial pause/resume of the video
+        scope.launch {
+            delay(5.seconds)
+            pause()
+            delay(3.seconds)
+            resume()
         }
     }
 
@@ -142,5 +159,19 @@ class VideoPlayerClass(
      */
     private fun syncWithAudio() {
         videoGrabber.timestamp = soundLine!!.microsecondPosition
+    }
+
+    fun resume() {
+        soundLine!!.start()
+        isResumed = true
+    }
+
+    /**
+     * See https://stackoverflow.com/q/16915241
+     * and https://stackoverflow.com/q/24274997
+     */
+    fun pause() {
+        isResumed = false
+        soundLine!!.stop()
     }
 }
