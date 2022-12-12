@@ -26,6 +26,7 @@ import javax.sound.sampled.AudioFormat
 import javax.sound.sampled.AudioSystem
 import javax.sound.sampled.DataLine
 import javax.sound.sampled.SourceDataLine
+import kotlin.time.Duration.Companion.microseconds
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
@@ -91,8 +92,8 @@ class VideoPlayerClass(
                 while (!isResumed) delay(50.milliseconds)
                 val bitmap = imageConverter.convert(image).toComposeImageBitmap()
                 _videoFrames.value = bitmap
-                val delay = (image.timestamp - (System.nanoTime() / 1000 - startTime)) / 1000
-                delay(delay)
+                val elapsedTime = (System.nanoTime() / 1000) - startTime
+                delay((image.timestamp - elapsedTime).microseconds)
                 image = videoGrabber.grabImage()
             }
             videoGrabber.stop()
@@ -145,7 +146,7 @@ class VideoPlayerClass(
 
     private suspend fun waitForAudioToStart() {
         fun isStarted() = (soundLine?.framePosition ?: 0) > 0
-        while (!isStarted()) delay(50)
+        while (!isStarted()) delay(50.milliseconds)
     }
 
     /**
