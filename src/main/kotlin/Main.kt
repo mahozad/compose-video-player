@@ -16,6 +16,12 @@ fun main() = application {
 fun App() {
     Column {
         Text("Hello, World!")
-        VideoPlayer("raw/sample.ts", 600, 400)
+        VideoPlayer(
+            // NOTE: The sample.ts file is inherently out of sync.
+            //  Try playing it with another player to see this
+            "raw/sample.ts",
+            600,
+            400
+        )
     }
 }
