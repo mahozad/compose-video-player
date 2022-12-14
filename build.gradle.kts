@@ -62,6 +62,9 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "compose-video-player2"
             packageVersion = "1.0.0"
+            buildTypes.release.proguard {
+                configurationFiles.from("rules.pro")
+            }
         }
     }
 }
