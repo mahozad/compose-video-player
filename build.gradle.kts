@@ -43,7 +43,7 @@ dependencies {
     // TODO: When publishing our library for a specific platform,
     //  somehow only include the FFmpeg JAR for that platform in our publishing.
     // implementation("org.bytedeco:ffmpeg-platform:5.1.2-1.5.8")
-    implementation("org.bytedeco:ffmpeg:5.1.2-1.5.8:windows-x86_64") // Platform-specific artifact
+    runtimeOnly("org.bytedeco:ffmpeg:5.1.2-1.5.8:windows-x86_64") // Platform-specific artifact
 
     @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
     testImplementation(compose.uiTestJUnit4)
