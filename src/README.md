@@ -1,9 +1,18 @@
 See how the GIF player was implemented in Compose Multiplatform:
 https://github.com/JetBrains/compose-jb/issues/153
 
+## Links about video player
+  - https://github.com/bytedeco/javacv/discussions/1956#discussioncomment-4373707
+  - https://github.com/JetBrains/compose-jb/issues/2499
+  - https://github.com/JetBrains/compose-jb/issues/1951
+  - https://github.com/JetBrains/compose-jb/issues/1249
+  - https://github.com/JetBrains/compose-jb/issues/1595
+  - https://github.com/JetBrains/compose-jb/issues/711
+  - https://github.com/JetBrains/compose-jb/pull/421
+
 ## FFmpeg
-- About: https://ffmpeg.org/about.html
-- Tutorials and how-tos: https://trac.ffmpeg.org/wiki
+  - About: https://ffmpeg.org/about.html
+  - Tutorials and how-tos: https://trac.ffmpeg.org/wiki
 
 FFmpeg is the leading multimedia framework, able to
 decode, encode, transcode, mux, demux, stream, filter and play
@@ -27,7 +36,9 @@ See:
   - https://stackoverflow.com/q/63228235
 
 ## Test videos
-Sample videos for testing can be downloaded from https://test-videos.co.uk/
+Sample videos for testing can be downloaded from:
+  - https://test-videos.co.uk/
+  - http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4
 
 ## Some technical stuff
 
