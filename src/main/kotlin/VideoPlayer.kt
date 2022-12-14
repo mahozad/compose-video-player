@@ -49,7 +49,6 @@ fun VideoPlayer(url: URL, width: Int, height: Int) {
  * NOTE: We could also probably use https://github.com/mahozad/jlayer to play audio/sound.
  */
 class VideoPlayerClass(
-    // OR URL("file://192.168.12.34/path/to/video.ts")
     sourcePath: URL,
     width: Int,
     height: Int
