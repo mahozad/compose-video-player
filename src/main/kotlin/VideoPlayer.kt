@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import org.bytedeco.javacv.FFmpegFrameGrabber
 import org.bytedeco.javacv.Frame
 import org.bytedeco.javacv.Java2DFrameConverter
+import java.net.URL
 import java.nio.ByteBuffer
 import java.nio.ShortBuffer
 import javax.sound.sampled.AudioFormat
@@ -31,7 +32,7 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
-fun VideoPlayer(url: String, width: Int, height: Int) {
+fun VideoPlayer(url: URL, width: Int, height: Int) {
     val player = remember { VideoPlayerClass(url, width , height) }
     val timestamp by player.timestamp.collectAsState()
     val frame by player.videoFrames.collectAsState()
@@ -49,7 +50,7 @@ fun VideoPlayer(url: String, width: Int, height: Int) {
  */
 class VideoPlayerClass(
     // OR URL("file://192.168.12.34/path/to/video.ts")
-    sourcePath: String,
+    sourcePath: URL,
     width: Int,
     height: Int
 ) {
