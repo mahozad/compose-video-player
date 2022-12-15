@@ -11,14 +11,24 @@ https://github.com/JetBrains/compose-jb/issues/153
   - https://github.com/JetBrains/compose-jb/pull/421
 
 ## FFmpeg
-  - About: https://ffmpeg.org/about.html
-  - Tutorials and how-tos: https://trac.ffmpeg.org/wiki
+About: https://ffmpeg.org/about.html
 
 FFmpeg is the leading multimedia framework, able to
 decode, encode, transcode, mux, demux, stream, filter and play
 pretty much anything that humans and machines have created.
 It supports the most obscure ancient formats up to the cutting edge.
 No matter if they were designed by some standards committee, the community or a corporation.
+
+YouTube probably uses FFmpeg to encode videos. See:
+  - https://streaminglearningcenter.com/blogs/youtube-uses-ffmpeg-for-encoding.html
+  - https://multimedia.cx/eggs/googles-youtube-uses-ffmpeg/
+  - https://www.quora.com/What-does-YouTube-use-for-encoding-video
+  - https://security.googleblog.com/2014/01/ffmpeg-and-thousand-fixes.html
+
+## Creating video player
+  - FFmpeg tutorials and how-tos: https://trac.ffmpeg.org/wiki
+  - https://stackoverflow.com/q/19463550
+  - http://dranger.com/ffmpeg/
 
 ## Enable hardware acceleration
 See https://github.com/bytedeco/javacv/issues/1701
@@ -37,8 +47,9 @@ See:
 
 ## Test videos
 Sample videos for testing can be downloaded from:
+  - https://samples.mplayerhq.hu/
   - https://test-videos.co.uk/
-  - http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4
+  - https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4
 
 ## Some technical stuff
 
