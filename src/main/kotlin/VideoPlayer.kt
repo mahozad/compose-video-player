@@ -100,6 +100,7 @@ class VideoPlayerClass(
         }
         scope.launch {
             audioGrabber.start()
+            if (!audioGrabber.hasAudio()) return@launch
             // See https://github.com/bytedeco/javacv/blob/master/samples/JavaFxPlayVideoAndAudio.java
             val audioFormat = AudioFormat(
                 // NOTE: I multiplied by 2 so the audio plays at normal speed.
