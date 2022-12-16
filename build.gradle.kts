@@ -31,7 +31,7 @@ kotlin {
 
 tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
-    gradleVersion = "7.5.1"
+    gradleVersion = properties["gradle.version"] as String
 }
 
 dependencies {
