@@ -23,25 +23,25 @@ import org.bytedeco.javacv.Java2DFrameConverter
 import java.net.URL
 import java.nio.ByteBuffer
 import java.nio.ShortBuffer
-import javax.sound.sampled.AudioFormat
-import javax.sound.sampled.AudioSystem
-import javax.sound.sampled.DataLine
-import javax.sound.sampled.SourceDataLine
+import javax.sound.sampled.*
 import kotlin.time.Duration.Companion.microseconds
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun VideoPlayer(url: URL, width: Int, height: Int) {
     val player = remember { VideoPlayerClass(url, width , height) }
-    val timestamp by player.timestamp.collectAsState()
+    val audioTimestamp by player.audioTimestamp.collectAsState()
+    val soundLineTimestamp by player.soundLineTimestamp.collectAsState()
+    val videoTimestamp by player.videoTimestamp.collectAsState()
     val frame by player.videoFrames.collectAsState()
     remember { player.start() }
     Column {
         Canvas(Modifier.width(width.dp).height(height.dp)) {
             frame?.let(::drawImage)
         }
-        Text(timestamp.toString())
+        Text("Video timestamp:         $videoTimestamp")
+        Text("Audio timestamp:         $audioTimestamp")
+        Text("SoundLine timestamp: $soundLineTimestamp")
     }
 }
 
@@ -59,10 +59,14 @@ class VideoPlayerClass(
     private val audioGrabber = FFmpegFrameGrabber(sourcePath)
     private var soundLine: SourceDataLine? = null
     private val _videoFrames = MutableStateFlow<ImageBitmap?>(null)
-    private val _timestamp = MutableStateFlow<Long>(0)
+    private val _videoTimestamp = MutableStateFlow<Long>(0)
+    private val _audioTimestamp = MutableStateFlow<Long>(0)
+    private val _soundLineTimestamp = MutableStateFlow<Long>(0)
     private var isResumed = true
     val videoFrames = _videoFrames.asStateFlow()
-    val timestamp = _timestamp.asStateFlow()
+    val videoTimestamp = _videoTimestamp.asStateFlow()
+    val audioTimestamp = _audioTimestamp.asStateFlow()
+    val soundLineTimestamp = _soundLineTimestamp.asStateFlow()
 
     init {
         videoGrabber.imageWidth = width // Comment so it defaults to video original width
@@ -90,6 +94,7 @@ class VideoPlayerClass(
             val startTime = System.nanoTime() / 1000 - image!!.timestamp
             while (image != null) {
                 while (!isResumed) delay(50.milliseconds)
+                _videoTimestamp.value = videoGrabber.timestamp
                 val bitmap = imageConverter.convert(image).toComposeImageBitmap()
                 _videoFrames.value = bitmap
                 val elapsedTime = (System.nanoTime() / 1000) - startTime
@@ -121,6 +126,10 @@ class VideoPlayerClass(
             var frame = audioGrabber.grabSamples()
             while (frame != null) {
                 while (!isResumed) delay(50.milliseconds)
+
+                _audioTimestamp.value = audioGrabber.timestamp
+                _soundLineTimestamp.value = soundLine!!.microsecondPosition
+
                 val channelSamplesShortBuffer = frame.samples[0] as ShortBuffer
                 channelSamplesShortBuffer.rewind()
                 val outBuffer = ByteBuffer.allocate(channelSamplesShortBuffer.capacity() * 2)
@@ -130,7 +139,6 @@ class VideoPlayerClass(
                 soundLine!!.write(outBuffer.array(), 0, outBuffer.capacity())
                 outBuffer.clear()
                 frame = audioGrabber.grabSamples()
-                _timestamp.value = frame.timestamp / 1_000
             }
         }
 
@@ -139,17 +147,28 @@ class VideoPlayerClass(
 
 
         // REMOVEME: Artificial pause/resume of the video
-        scope.launch {
-            delay(5.seconds)
-            pause()
-            delay(3.seconds)
-            resume()
-        }
+        // scope.launch {
+        //     delay(5.seconds)
+        //     pause()
+        //     delay(3.seconds)
+        //     resume()
+        // }
     }
 
     private suspend fun waitForAudioToStart() {
-        fun isStarted() = (soundLine?.framePosition ?: 0) > 0
-        while (!isStarted()) delay(50.milliseconds)
+        // fun isStarted() = (soundLine?.framePosition ?: 0) > 0
+        // fun isStarted() = (soundLine?.microsecondPosition ?: 0) > 1_000_000
+        // fun isStarted() = (soundLine?.longFramePosition ?: 0) > 0
+        // fun isStarted() = soundLine?.isActive == false
+        // while (!isStarted()) delay(50.milliseconds)
+
+        var isStarted = false
+        while (soundLine == null) delay(1.milliseconds)
+        soundLine?.addLineListener {
+            if (it.type == LineEvent.Type.START) isStarted = true
+        }
+        while (!isStarted) delay(5.milliseconds)
+        println(soundLine?.longFramePosition)
     }
 
     /**
