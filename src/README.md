@@ -40,20 +40,23 @@ YouTube probably uses FFmpeg to encode videos. See:
   - https://www.quora.com/What-does-YouTube-use-for-encoding-video
   - https://security.googleblog.com/2014/01/ffmpeg-and-thousand-fixes.html
 
-## Creating video player
+## Creating a video player
   - FFmpeg tutorials and how-tos: https://trac.ffmpeg.org/wiki
   - https://stackoverflow.com/q/19463550
   - http://dranger.com/ffmpeg/
   - https://www.cocos.com/en/post/building-an-internal-video-player-based-on-ffmpeg-for-cocos-creator
 
 ## Enable hardware acceleration
-See https://github.com/bytedeco/javacv/issues/1701
-and https://www.quora.com/Whats-the-difference-between-an-H-W-decoder-and-an-S-W-decoder-in-video-players
+  - https://github.com/bytedeco/javacv/issues/1701
+  - https://www.quora.com/Whats-the-difference-between-an-H-W-decoder-and-an-S-W-decoder-in-video-players
+
+## Playing audio in Java
+  - https://www.baeldung.com/java-play-sound
 
 ## Sync the video and audio
-https://stackoverflow.com/q/68874455
-https://forum.processing.org/two/discussion/19233/getting-audio-and-video-in-sync.html
-https://community.oracle.com/tech/developers/discussion/2383959/how-can-i-sync-with-audio-framerate
+  - https://stackoverflow.com/q/68874455
+  - https://forum.processing.org/two/discussion/19233/getting-audio-and-video-in-sync.html
+  - https://community.oracle.com/tech/developers/discussion/2383959/how-can-i-sync-with-audio-framerate
 
 ## Speed up or slow down video and audio
 Example of speeding up by a factor of `3.0`:
@@ -82,6 +85,6 @@ and .mp3 file formats are a type of MPEG-2 container format.
 Is abbreviation of multiplexing
 
 ### PTS (presentation timestamp)
-https://en.wikipedia.org/wiki/Presentation_timestamp
+  - https://en.wikipedia.org/wiki/Presentation_timestamp
 
 ### Transcoding
