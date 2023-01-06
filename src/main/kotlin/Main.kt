@@ -34,9 +34,9 @@ fun App() {
              *   - URL("file" , "" , File("raw/sample.ts").absolutePath)
              *   - etc.
              */
-            URL("file:raw/sample.ts"),
-            600,
-            400
+            URL("file:raw/1.mp4"),
+            640,
+            360
         )
     }
 }

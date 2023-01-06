@@ -112,7 +112,7 @@ class VideoPlayerClass(
                 //  Why? Is it because the video is interlaced?
                 // NOTE: Accessing `grabber.audioFrameRate` or `grabber.lengthInAudioFrames`
                 //  speeds up the audio for some videos (including the default .ts video).
-                audioGrabber.sampleRate.toFloat() * 2,
+                audioGrabber.sampleRate.toFloat() /* * 2 */,
                 16,
                 audioGrabber.audioChannels,
                 true,
