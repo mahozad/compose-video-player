@@ -3,6 +3,7 @@ https://www.linkedin.com/pulse/java-media-framework-vs-javafx-api-randula-korala
   - Vlcj: https://github.com/caprica/vlcj
     + Recommended by Compose Multiplatform
     + Requires VLC to have been installed on the system
+    + See the vlcj branch for vlcj implementation
   - JavaFx Media player
     + Supported formats: https://openjfx.io/javadoc/19/javafx.media/javafx/scene/media/package-summary.html
   - Java Media Framework (JMF): https://www.oracle.com/java/technologies/javase/java-media-framework.html
