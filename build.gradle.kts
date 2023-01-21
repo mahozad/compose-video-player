@@ -36,19 +36,7 @@ tasks.wrapper {
 
 dependencies {
     implementation(compose.desktop.currentOs)
-    // Or org.bytedeco:javacv-platform for cross-platform usage
-    implementation("org.bytedeco:javacv:1.5.8")
-    implementation("org.bytedeco:ffmpeg:5.1.2-1.5.8") // The main artifact (not really needed)
-    runtimeOnly("org.bytedeco:ffmpeg:5.1.2-1.5.8:windows-x86_64") // Platform-specific artifact
-
-    @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-    testImplementation(compose.uiTestJUnit4)
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.1")
-    // Include the Vintage engine to be able to run JUnit 4 tests as well
-    testImplementation("org.junit.vintage:junit-vintage-engine:5.9.1")
-    testImplementation("org.assertj:assertj-core:3.23.1")
-    testImplementation("io.mockk:mockk:1.13.2")
+    implementation("uk.co.caprica:vlcj:4.8.2")
 }
 
 compose.desktop {
