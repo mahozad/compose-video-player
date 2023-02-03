@@ -11,6 +11,7 @@ https://www.linkedin.com/pulse/java-media-framework-vs-javafx-api-randula-korala
   - Swing player: https://stackoverflow.com/q/52038982
 
 ## GitHub issues, PRs and discussions about video player
+  - https://github.com/JetBrains/compose-jb/tree/master/experimental/components/VideoPlayer
   - How the GIF player was implemented in Compose Multiplatform:  
     https://github.com/JetBrains/compose-jb/issues/153
   - https://github.com/bytedeco/javacv/discussions/1956#discussioncomment-4373707
@@ -25,6 +26,25 @@ https://www.linkedin.com/pulse/java-media-framework-vs-javafx-api-randula-korala
 ## Similar libraries
   - https://github.com/databrary/datavyu-ffmpegplugin
   - https://github.com/rockcarry/fanplayer
+  - https://github.com/bilibili/ijkplayer
+  - https://github.com/arthenica/ffmpeg-kit
+  - We can use vlcj library which needs VLC to have been installed on the system.
+    See https://github.com/caprica/vlcj
+    To run without VLC see:
+    + https://github.com/caprica/vlcj/issues/1072
+    + https://github.com/caprica/vlcj-natives/issues/1
+    + https://stackoverflow.com/q/20836359
+    + https://stackoverflow.com/q/45881054
+    + https://stackoverflow.com/q/15080165
+  - We can use VLC official libVLC binding for Java/Kotlin to play video: http://www.videolan.org/vlc/libvlc.html
+  - We can use [ffplay](https://ffmpeg.org/ffplay.html) included in **BtbN** Windows build:
+    https://ffmpeg.org/download.html#build-windows
+    -> https://github.com/BtbN/FFmpeg-Builds/releases
+    -> Expand the assets section to see all build variants
+    -> Download an ffmpeg (which includes ffprobe and ffplay)
+  - On Android, We can use ExoPlayer:
+    https://itnext.io/playing-a-video-with-jetpack-compose-10a453ff956
+    https://www.youtube.com/watch?v=JX1fwti2LI4&ab_channel=PhilippLackner
 
 ## FFmpeg
 About: https://ffmpeg.org/about.html
@@ -34,6 +54,13 @@ decode, encode, transcode, mux, demux, stream, filter and play
 pretty much anything that humans and machines have created.
 It supports the most obscure ancient formats up to the cutting edge.
 No matter if they were designed by some standards committee, the community or a corporation.
+
+[FFmpeg in 100 seconds](https://www.youtube.com/watch?v=26Mayv5JPz0)
+
+[Building FFmpeg for Windows](https://trac.ffmpeg.org/wiki/CompilationGuide/MinGW)
+
+MSYS2 provides up-to-date native builds for FFmpeg, GCC, etc. just to name a few.
+See https://www.msys2.org/
 
 YouTube probably uses FFmpeg to encode videos. See:
   - https://streaminglearningcenter.com/blogs/youtube-uses-ffmpeg-for-encoding.html
@@ -46,6 +73,22 @@ YouTube probably uses FFmpeg to encode videos. See:
   - https://stackoverflow.com/q/19463550
   - http://dranger.com/ffmpeg/
   - https://www.cocos.com/en/post/building-an-internal-video-player-based-on-ffmpeg-for-cocos-creator
+  - [An ffmpeg and SDL Tutorial or How to Write a Video Player in Less Than 1000 Lines](http://dranger.com/ffmpeg/)
+  - [bytedeco:javacv JavaFxVideoAndAudio player](https://github.com/bytedeco/javacv/blob/master/samples/JavaFxPlayVideoAndAudio.java)
+  - [SDL library](https://github.com/libsdl-org/SDL)
+  - Related (for cutting/splitting/slicing/cropping video): https://github.com/mifi/lossless-cut
+
+We can use the [javacv library](https://github.com/bytedeco/javacv) (org.bytedeco:javacv-platform:1.5.8)
+and its FrameGrabber and Recorder and draw each frame in a Compose canvas.
+Note that the library brings JARs for all platforms and architectures (about 250 MB)
+which may not be needed on the current OS/architecture.
+
+See:
+- https://github.com/bytedeco/javacv/blob/master/samples/FFmpegStreamingTimeout.java
+- https://stackoverflow.com/q/13770376
+- https://stackoverflow.com/q/67986576
+- https://stackoverflow.com/q/59185079
+- https://stackoverflow.com/q/17401852
 
 ## Enable hardware acceleration
   - https://github.com/bytedeco/javacv/issues/1701
@@ -53,6 +96,7 @@ YouTube probably uses FFmpeg to encode videos. See:
 
 ## Playing audio in Java
   - https://www.baeldung.com/java-play-sound
+  - We could probably use https://github.com/mahozad/jlayer to play audio/sound
 
 ## Sync the video and audio
   - https://stackoverflow.com/q/68874455
@@ -89,3 +133,8 @@ Is abbreviation of multiplexing
   - https://en.wikipedia.org/wiki/Presentation_timestamp
 
 ### Transcoding
+
+
+### Other
+Add audio spectrum below or over the video like Aimp.
+See https://github.com/goxr3plus/XR3Player#java-audio-tutorials-and-apis-by-goxr3plus-studio
