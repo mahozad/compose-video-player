@@ -38,6 +38,8 @@ fun VideoPlayer(
     LaunchedEffect(isResumed) { mediaPlayer.controls().setPause(!isResumed) }
     LaunchedEffect(isFullscreen) {
         if (mediaPlayer is EmbeddedMediaPlayer) {
+            // To be able to access window in the code below,
+            // extend the player composable function from WindowScope
             // mediaPlayer.fullScreen().strategy(ExclusiveModeFullScreenStrategy(window))
             mediaPlayer.fullScreen().toggle()
         }
