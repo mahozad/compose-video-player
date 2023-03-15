@@ -34,7 +34,7 @@ fun VideoPlayer(
     LaunchedEffect(url) { mediaPlayer.media().play(url) /* OR .start(url) */ }
     LaunchedEffect(seek) { mediaPlayer.controls().setPosition(seek) }
     LaunchedEffect(speed) { mediaPlayer.controls().setRate(speed) }
-    LaunchedEffect(volume) { mediaPlayer.audio().setVolume((volume * 100).toInt()) }
+    LaunchedEffect(volume) { mediaPlayer.audio().setVolume(volume.toPercentage()) }
     LaunchedEffect(isResumed) { mediaPlayer.controls().setPause(!isResumed) }
     LaunchedEffect(isFullscreen) {
         if (mediaPlayer is EmbeddedMediaPlayer) {
@@ -51,6 +51,8 @@ fun VideoPlayer(
     mediaPlayer.setupVideoFinishHandler(onFinish)
     return mediaPlayer.produceProgressFor(url)
 }
+
+private fun Float.toPercentage() = (this * 100).toInt()
 
 /**
  * See https://github.com/caprica/vlcj/issues/887#issuecomment-503288294
