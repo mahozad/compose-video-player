@@ -101,10 +101,10 @@ private fun MediaPlayer.produceProgressFor(url: String) =
  * The method names are the same, but they don't share the same parent/interface.
  * That's why we need this method.
  */
-private fun Any.mediaPlayer() = when (this) {
+private fun Component.mediaPlayer() = when (this) {
     is CallbackMediaPlayerComponent -> mediaPlayer()
     is EmbeddedMediaPlayerComponent -> mediaPlayer()
-    else                            -> throw IllegalArgumentException("You can only call mediaPlayer() on vlcj player components")
+    else                            -> error("mediaPlayer() can only be called on vlcj player components")
 }
 
 private fun isMacOS(): Boolean {
