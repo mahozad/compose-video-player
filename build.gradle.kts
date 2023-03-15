@@ -38,7 +38,7 @@ dependencies {
     implementation(compose.desktop.currentOs)
     // Or org.bytedeco:javacv-platform for cross-platform usage
     implementation("org.bytedeco:javacv:1.5.8")
-    implementation("org.bytedeco:ffmpeg:5.1.2-1.5.8") // The main artifact
+    implementation("org.bytedeco:ffmpeg:5.1.2-1.5.8") // The main artifact (not really needed)
     runtimeOnly("org.bytedeco:ffmpeg:5.1.2-1.5.8:windows-x86_64") // Platform-specific artifact
 
     @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
