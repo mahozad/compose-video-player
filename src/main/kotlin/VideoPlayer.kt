@@ -71,7 +71,8 @@ private fun initializeMediaPlayerComponent(): Component = remember {
 }
 
 /**
- * We play the video on finish (so the player is kind of idempotent).
+ * We play the video on finish (so the player is kind of idempotent),
+ * unless the [onFinish] block stops the playback.
  * Using `mediaPlayer.controls().repeat = true` did not work as expected.
  */
 @Composable
@@ -99,7 +100,7 @@ private fun MediaPlayer.produceProgressFor(url: String) =
     }
 
 /**
- * To return [MediaPlayer] from player components.
+ * Returns [MediaPlayer] from player components.
  * The method names are the same, but they don't share the same parent/interface.
  * That's why we need this method.
  */
