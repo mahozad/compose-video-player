@@ -104,6 +104,9 @@ See:
   - https://community.oracle.com/tech/developers/discussion/2383959/how-can-i-sync-with-audio-framerate
 
 ## Speed up or slow down video and audio
+
+https://github.com/waywardgeek/sonic
+
 Example of speeding up by a factor of `3.0`:
 
 ```shell
