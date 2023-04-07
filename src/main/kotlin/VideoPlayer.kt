@@ -1,4 +1,7 @@
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.listSaver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.awt.SwingPanel
 import androidx.compose.ui.graphics.Color
@@ -11,26 +14,30 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer
 import java.awt.Component
 import java.util.*
+import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.milliseconds
 
-data class Progress(val fraction: Float, val time/* millis */: Long)
+data class Progress(val fraction: Float, val timeMillis: Long)
 
 @Composable
-fun VideoPlayer(
+private fun VideoPlayerImpl(
     url: String,
     isResumed: Boolean,
-    volume: Float = 1f,
-    speed: Float = 1f,
-    seek: Float = 0f,
-    isFullscreen: Boolean = false,
-    modifier: Modifier = Modifier,
-    onFinish: (() -> Unit)? = null
+    volume: Float,
+    speed: Float,
+    seek: Float,
+    isFullscreen: Boolean,
+    modifier: Modifier,
+    onFinish: (() -> Unit)?
 ): State<Progress> {
     val mediaPlayerComponent = initializeMediaPlayerComponent()
     val mediaPlayer = remember { mediaPlayerComponent.mediaPlayer() }
-    // OR the following code and using SwingPanel(factory = { factory }, ...)
-    // val factory  by rememberUpdatedState(mediaPlayerComponent)
+    mediaPlayer.setupVideoFinishHandler(onFinish)
+
     val factory = remember { { mediaPlayerComponent } }
+    /* OR the following code and using SwingPanel(factory = { factory }, ...) */
+    // val factory by rememberUpdatedState(mediaPlayerComponent)
+
     LaunchedEffect(url) { mediaPlayer.media().play(url) /* OR .start(url) */ }
     LaunchedEffect(seek) { mediaPlayer.controls().setPosition(seek) }
     LaunchedEffect(speed) { mediaPlayer.controls().setRate(speed) }
@@ -38,8 +45,16 @@ fun VideoPlayer(
     LaunchedEffect(isResumed) { mediaPlayer.controls().setPause(!isResumed) }
     LaunchedEffect(isFullscreen) {
         if (mediaPlayer is EmbeddedMediaPlayer) {
-            // To be able to access window in the code below,
-            // extend the player composable function from WindowScope
+            /*
+             * To be able to access window in the commented code below,
+             * extend the player composable function from WindowScope.
+             * See https://github.com/JetBrains/compose-jb/issues/176#issuecomment-812514936
+             * and its subsequent comments.
+             *
+             * We could also just fullscreen the whole window:
+             * `window.placement = WindowPlacement.Fullscreen`
+             * See https://github.com/JetBrains/compose-multiplatform/issues/1489
+             */
             // mediaPlayer.fullScreen().strategy(ExclusiveModeFullScreenStrategy(window))
             mediaPlayer.fullScreen().toggle()
         }
@@ -50,11 +65,10 @@ fun VideoPlayer(
         background = Color.Transparent,
         modifier = modifier
     )
-    mediaPlayer.setupVideoFinishHandler(onFinish)
-    return mediaPlayer.produceProgressFor(url)
+    return mediaPlayer.produceProgress()
 }
 
-private fun Float.toPercentage() = (this * 100).toInt()
+private fun Float.toPercentage() = (this * 100).roundToInt()
 
 /**
  * See https://github.com/caprica/vlcj/issues/887#issuecomment-503288294
@@ -72,7 +86,7 @@ private fun initializeMediaPlayerComponent(): Component = remember {
 
 /**
  * We play the video on finish (so the player is kind of idempotent),
- * unless the [onFinish] block stops the playback.
+ * unless the [onFinish] callback stops the playback.
  * Using `mediaPlayer.controls().repeat = true` did not work as expected.
  */
 @Composable
@@ -88,9 +102,18 @@ private fun MediaPlayer.setupVideoFinishHandler(onFinish: (() -> Unit)?) =
         onDispose { events().removeMediaPlayerEventListener(listener) }
     }
 
+/**
+ * Checks for and emits video progress every 50 milliseconds.
+ * Note that it seems vlcj updates the progress only every 250 milliseconds or so.
+ *
+ * Instead of using `Unit` as the `key1` for [produceState],
+ * we could use `media().info()?.mrl()` if it's needed to re-launch
+ * the producer (for whatever reason) when the url (aka video) changes.
+ *
+ */
 @Composable
-private fun MediaPlayer.produceProgressFor(url: String) =
-    produceState(key1 = url, initialValue = Progress(0f, 0L)) {
+private fun MediaPlayer.produceProgress() =
+    produceState(key1 = Unit, initialValue = Progress(0f, 0L)) {
         while (true) {
             val fraction = status().position()
             val time = status().time()
@@ -107,7 +130,7 @@ private fun MediaPlayer.produceProgressFor(url: String) =
 private fun Component.mediaPlayer() = when (this) {
     is CallbackMediaPlayerComponent -> mediaPlayer()
     is EmbeddedMediaPlayerComponent -> mediaPlayer()
-    else                            -> error("mediaPlayer() can only be called on vlcj player components")
+    else -> error("mediaPlayer() can only be called on vlcj player components")
 }
 
 private fun isMacOS(): Boolean {
@@ -115,4 +138,91 @@ private fun isMacOS(): Boolean {
         .getProperty("os.name", "generic")
         .lowercase(Locale.ENGLISH)
     return "mac" in os || "darwin" in os
+}
+
+@Composable
+fun VideoPlayer(
+    url: String,
+    state: VideoPlayerState,
+    modifier: Modifier = Modifier,
+    onFinish: (() -> Unit)? = null
+) = VideoPlayerImpl(
+    url = url,
+    isResumed = state.isResumed,
+    volume = state.volume,
+    speed = state.speed,
+    seek = state.seek,
+    isFullscreen = state.isFullscreen,
+    modifier = modifier,
+    onFinish = onFinish
+)
+
+@Composable
+fun rememberVideoPlayerState(
+    seek: Float = 0f,
+    speed: Float = 1f,
+    volume: Float = 1f,
+    isResumed: Boolean = true,
+    isFullscreen: Boolean = false
+): VideoPlayerState = rememberSaveable(saver = VideoPlayerState.Saver()) {
+    VideoPlayerState(
+        seek,
+        speed,
+        volume,
+        isResumed,
+        isFullscreen
+    )
+}
+
+class VideoPlayerState(
+    seek: Float = 0f,
+    speed: Float = 1f,
+    volume: Float = 1f,
+    isResumed: Boolean = true,
+    isFullscreen: Boolean = false
+) {
+
+    var seek by mutableStateOf(seek)
+    var speed by mutableStateOf(speed)
+    var volume by mutableStateOf(volume)
+    var isResumed by mutableStateOf(isResumed)
+    var isFullscreen by mutableStateOf(isFullscreen)
+
+    fun toggleResume() {
+        isResumed = !isResumed
+    }
+
+    fun toggleFullscreen() {
+        isFullscreen = !isFullscreen
+    }
+
+    fun stopPlayback() {
+        isResumed = false
+    }
+
+    companion object {
+        /**
+         * The default [Saver] implementation for [VideoPlayerState].
+         */
+        fun Saver() = listSaver<VideoPlayerState, Any>(
+            save = {
+                listOf(
+                    it.seek,
+                    it.speed,
+                    it.volume,
+                    it.isResumed,
+                    it.isFullscreen
+                )
+            },
+            restore = {
+                VideoPlayerState(
+                    seek = it[0] as Float,
+                    speed = it[1] as Float,
+                    volume = it[2] as Float,
+                    isResumed = it[3] as Boolean,
+                    isFullscreen = it[3] as Boolean
+                )
+            }
+        )
+    }
 }

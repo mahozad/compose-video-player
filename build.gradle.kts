@@ -36,6 +36,7 @@ tasks.wrapper {
 
 dependencies {
     implementation(compose.desktop.currentOs)
+    implementation(compose.materialIconsExtended)
     implementation("uk.co.caprica:vlcj:4.8.2")
 }
 
