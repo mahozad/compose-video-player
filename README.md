@@ -11,17 +11,18 @@ https://www.linkedin.com/pulse/java-media-framework-vs-javafx-api-randula-korala
   - Swing player: https://stackoverflow.com/q/52038982
 
 ## GitHub issues, PRs and discussions about video player
-  - https://github.com/JetBrains/compose-jb/tree/master/experimental/components/VideoPlayer
+  - https://github.com/JetBrains/compose-multiplatform/pull/2906
+  - https://github.com/JetBrains/compose-multiplatform/tree/master/experimental/components/VideoPlayer
   - How the GIF player was implemented in Compose Multiplatform:  
-    https://github.com/JetBrains/compose-jb/issues/153
+    https://github.com/JetBrains/compose-multiplatform/issues/153
   - https://github.com/bytedeco/javacv/discussions/1956#discussioncomment-4373707
-  - https://github.com/JetBrains/compose-jb/issues/1164
-  - https://github.com/JetBrains/compose-jb/issues/2499
-  - https://github.com/JetBrains/compose-jb/issues/1951
-  - https://github.com/JetBrains/compose-jb/issues/1249
-  - https://github.com/JetBrains/compose-jb/issues/1595
-  - https://github.com/JetBrains/compose-jb/issues/711
-  - https://github.com/JetBrains/compose-jb/pull/421
+  - https://github.com/JetBrains/compose-multiplatform/issues/1164
+  - https://github.com/JetBrains/compose-multiplatform/issues/2499
+  - https://github.com/JetBrains/compose-multiplatform/issues/1951
+  - https://github.com/JetBrains/compose-multiplatform/issues/1249
+  - https://github.com/JetBrains/compose-multiplatform/issues/1595
+  - https://github.com/JetBrains/compose-multiplatform/issues/711
+  - https://github.com/JetBrains/compose-multiplatform/pull/421
 
 ## Similar libraries
   - https://github.com/databrary/datavyu-ffmpegplugin

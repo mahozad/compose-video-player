@@ -25,7 +25,7 @@ import java.net.URL
  * val VIDEO_URL = """file:///${Path("videos/example.mp4")}"""
  * ```
  * To package a video with the app distributable,
- * see [this tutorial](https://github.com/JetBrains/compose-jb/tree/master/tutorials/Native_distributions_and_local_execution#adding-files-to-packaged-application)
+ * see [this tutorial](https://github.com/JetBrains/compose-multiplatform/tree/master/tutorials/Native_distributions_and_local_execution#adding-files-to-packaged-application)
  * and then use a URL syntax like this:
  * ```kotlin
  * val VIDEO_URL = """file:///${Path(System.getProperty("compose.application.resources.dir")) / "example.mp4"}"""

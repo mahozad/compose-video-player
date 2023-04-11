@@ -48,7 +48,7 @@ private fun VideoPlayerImpl(
             /*
              * To be able to access window in the commented code below,
              * extend the player composable function from WindowScope.
-             * See https://github.com/JetBrains/compose-jb/issues/176#issuecomment-812514936
+             * See https://github.com/JetBrains/compose-multiplatform/issues/176#issuecomment-812514936
              * and its subsequent comments.
              *
              * We could also just fullscreen the whole window:
