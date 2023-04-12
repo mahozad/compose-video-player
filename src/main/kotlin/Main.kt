@@ -85,7 +85,7 @@ fun App() {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Timestamp: ${progress.timeMillis} ms", modifier = Modifier.width(180.dp))
+            Text("Timestamp: ${progress.time.inWholeMilliseconds} ms", modifier = Modifier.width(180.dp))
             IconButton(onClick = state::toggleResume) {
                 Icon(
                     imageVector = if (state.isResumed) Icons.Rounded.Pause else Icons.Rounded.PlayArrow,

@@ -15,9 +15,10 @@ import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer
 import java.awt.Component
 import java.util.*
 import kotlin.math.roundToInt
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
-data class Progress(val fraction: Float, val timeMillis: Long)
+data class Progress(val fraction: Float, val time: Duration)
 
 @Composable
 private fun VideoPlayerImpl(
@@ -113,10 +114,10 @@ private fun MediaPlayer.setupVideoFinishHandler(onFinish: (() -> Unit)?) =
  */
 @Composable
 private fun MediaPlayer.produceProgress() =
-    produceState(key1 = Unit, initialValue = Progress(0f, 0L)) {
+    produceState(key1 = Unit, initialValue = Progress(0f, 0.milliseconds)) {
         while (true) {
             val fraction = status().position()
-            val time = status().time()
+            val time = status().time().milliseconds
             value = Progress(fraction, time)
             delay(50.milliseconds)
         }
