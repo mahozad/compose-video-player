@@ -3,8 +3,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -100,20 +99,13 @@ fun App() {
                     modifier = Modifier.size(32.dp)
                 )
             }
-            OutlinedTextField(
-                value = state.speed.toString(),
-                maxLines = 1,
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Rounded.Speed,
-                        contentDescription = "Speed",
-                        modifier = Modifier.size(28.dp)
-                    )
-                },
-                modifier = Modifier.width(104.dp),
-                onValueChange = { state.speed = it.toFloat() }
-            )
-            Row (verticalAlignment = Alignment.CenterVertically) {
+            Speed(
+                initialValue = state.speed,
+                modifier = Modifier.width(104.dp)
+            ) {
+                state.speed = it ?: state.speed
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     imageVector = Icons.Rounded.VolumeUp,
                     contentDescription = "Volume",
@@ -131,4 +123,38 @@ fun App() {
             }
         }
     }
+}
+
+/**
+ * See [this Stack Overflow post](https://stackoverflow.com/a/67765652).
+ */
+@Composable
+fun Speed(
+    initialValue: Float,
+    modifier: Modifier = Modifier,
+    onChange: (Float?) -> Unit
+) {
+    var input by remember { mutableStateOf(initialValue.toString()) }
+    OutlinedTextField(
+        value = input,
+        modifier = modifier,
+        singleLine = true,
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Rounded.Speed,
+                contentDescription = "Speed",
+                modifier = Modifier.size(28.dp)
+            )
+        },
+        onValueChange = {
+            input = if (it.isEmpty()) {
+                it
+            } else if (it.toFloatOrNull() == null) {
+                input // Old value
+            } else {
+                it // New value
+            }
+            onChange(input.toFloatOrNull())
+        }
+    )
 }
