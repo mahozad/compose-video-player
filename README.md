@@ -107,6 +107,9 @@ YouTube probably uses FFmpeg to encode videos. See:
         * https://github.com/electron/electron/pull/4548
     + https://www.npmjs.com/package/ffbinaries
     + https://www.npmjs.com/package/@ffprobe-installer/ffprobe
+    + Telegram uses ffmpeg:
+      + https://github.com/telegramdesktop/dependencies_windows
+      + https://github.com/search?q=repo%3Atelegramdesktop%2Ftdesktop%20ffmpeg&type=code
 - See and check out the Git tag `ffmpeg-aggregator-dependency` in this repository
   for the previous (aggregator FFmpeg dependency) implementation.
 - Using external FFmpeg.exe and Java `ProcessBuilder` to run a regular executable file.  
