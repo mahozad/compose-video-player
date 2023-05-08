@@ -3,10 +3,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.toComposeImageBitmap
@@ -28,8 +25,13 @@ import kotlin.time.Duration.Companion.microseconds
 import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
-fun VideoPlayer(url: URL, width: Int, height: Int) {
-    val player = remember { VideoPlayerClass(url, width , height) }
+fun VideoPlayer(
+    url: URL,
+    progseek: MutableState<Float>,
+    width: Int,
+    height: Int
+) {
+    val player = remember { VideoPlayerClass(url, progseek, width, height) }
     val audioTimestamp by player.audioTimestamp.collectAsState()
     val soundLineTimestamp by player.soundLineTimestamp.collectAsState()
     val videoTimestamp by player.videoTimestamp.collectAsState()
@@ -50,6 +52,7 @@ fun VideoPlayer(url: URL, width: Int, height: Int) {
  */
 class VideoPlayerClass(
     sourcePath: URL,
+    private val progseek: MutableState<Float>,
     width: Int,
     height: Int
 ) {
@@ -144,6 +147,7 @@ class VideoPlayerClass(
 
 
 
+        audioGrabber.emitProgressTo(progseek)
 
 
         // REMOVEME: Artificial pause/resume of the video
@@ -196,5 +200,17 @@ class VideoPlayerClass(
     fun pause() {
         isResumed = false
         soundLine!!.stop()
+    }
+
+    private fun FFmpegFrameGrabber.emitProgressTo(
+        state: MutableState<Float>
+    ) {
+        scope.launch {
+            delay(500.milliseconds)
+            while (true) {
+                state.value = runCatching { timestamp.toFloat() / lengthInTime }.getOrNull() ?: 0f
+                delay(15.milliseconds)
+            }
+        }
     }
 }
