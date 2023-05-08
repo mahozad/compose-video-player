@@ -27,11 +27,15 @@ import kotlin.time.Duration.Companion.milliseconds
 @Composable
 fun VideoPlayer(
     url: URL,
-    progseek: MutableState<Float>,
+    seek: Float,
+    progress: MutableState<Float>,
     width: Int,
     height: Int
 ) {
-    val player = remember { VideoPlayerClass(url, progseek, width, height) }
+    val player = remember { VideoPlayerClass(url, progress, width, height) }
+    LaunchedEffect(seek) {
+        player.seek(seek)
+    }
     val audioTimestamp by player.audioTimestamp.collectAsState()
     val soundLineTimestamp by player.soundLineTimestamp.collectAsState()
     val videoTimestamp by player.videoTimestamp.collectAsState()
@@ -52,7 +56,7 @@ fun VideoPlayer(
  */
 class VideoPlayerClass(
     sourcePath: URL,
-    private val progseek: MutableState<Float>,
+    private val progress: MutableState<Float>,
     width: Int,
     height: Int
 ) {
@@ -147,7 +151,7 @@ class VideoPlayerClass(
 
 
 
-        audioGrabber.emitProgressTo(progseek)
+        audioGrabber.emitProgressTo(progress)
 
 
         // REMOVEME: Artificial pause/resume of the video
@@ -211,6 +215,17 @@ class VideoPlayerClass(
                 state.value = runCatching { timestamp.toFloat() / lengthInTime }.getOrNull() ?: 0f
                 delay(15.milliseconds)
             }
+        }
+    }
+
+    fun seek(fraction: Float) {
+        if (fraction > 0) {
+            audioGrabber.setAudioTimestamp(
+                (fraction * audioGrabber.lengthInTime).toLong()
+            )
+            videoGrabber.setVideoTimestamp(
+                (fraction * videoGrabber.lengthInTime).toLong()
+            )
         }
     }
 }

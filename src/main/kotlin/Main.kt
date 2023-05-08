@@ -21,7 +21,8 @@ fun main() = application {
 @Composable
 fun App() {
     Column {
-        val progseek = remember { mutableStateOf(0f) }
+        val progress = remember { mutableStateOf(0f) }
+        val seek = remember { mutableStateOf(0f) }
         Text("Hello, World!")
         VideoPlayer(
             /**
@@ -41,30 +42,31 @@ fun App() {
              *   - etc.
              */
             URL("file:raw/1.mp4"),
-            progseek = progseek,
+            seek = seek.value,
+            progress = progress,
             width = 640,
             height = 360
         )
-        Progseek(progseek)
+        Progseek(seek, progress)
     }
 }
 
 @Composable
-fun Progseek(progress: MutableState<Float>) {
+fun Progseek(seek: MutableState<Float>, progress: State<Float>) {
     var isSeeking by remember { mutableStateOf(false) }
-    var seek by remember { mutableStateOf(0f) }
+    var seekValue by remember { mutableStateOf(0f) }
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Slider(
-            value = if (isSeeking) seek else progress.value,
+            value = if (isSeeking) seekValue else progress.value,
             onValueChange = {
                 isSeeking = true
-                seek = it
+                seekValue = it
             },
             onValueChangeFinished = {
-                progress.value = seek
+                seek.value = seekValue
                 isSeeking = false
             }
         )
