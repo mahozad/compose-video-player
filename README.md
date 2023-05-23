@@ -352,6 +352,7 @@ See:
   - https://stackoverflow.com/q/68874455
   - https://forum.processing.org/two/discussion/19233/getting-audio-and-video-in-sync.html
   - https://community.oracle.com/tech/developers/discussion/2383959/how-can-i-sync-with-audio-framerate
+  - https://youtu.be/jzvC-0WCjKU
 
 ## Speed up or slow down video and audio
 
@@ -370,6 +371,14 @@ See:
 
 ## Test videos
 Sample videos for testing can be downloaded from:
+  - Tv test patterns
+    - https://en.wikipedia.org/wiki/Philips_circle_pattern
+    - https://www.reddit.com/r/VIDEOENGINEERING/comments/125iwkf/new_downloadable_test_pattern/
+    - https://www.pierrehenrypauly.com/database
+    - https://www.youtube.com/watch?v=dlzc-jbhRpI&ab_channel=Pierre-HenryPAULY
+    - https://www.youtube.com/watch?v=IIqtuupvdWg&ab_channel=XponentialdesignTutorials%26VideoMarketplace
+    - http://www.gvgdevelopers.com/concrete/products/k2/test_clips/
+    - https://stock.adobe.com/ee/search?k=tv+test+pattern&asset_id=202297164
   - https://samples.mplayerhq.hu/
   - https://test-videos.co.uk/
   - https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4
