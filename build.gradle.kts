@@ -1,5 +1,4 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.compose.jetbrainsCompose
 
 plugins {
     kotlin("jvm")
@@ -8,13 +7,6 @@ plugins {
 
 group = "ir.mahozad"
 version = "1.0-SNAPSHOT"
-
-repositories {
-    google()
-    jcenter()
-    mavenCentral()
-    jetbrainsCompose()
-}
 
 tasks.withType<Test> {
     useJUnitPlatform() // JUnit 5
@@ -30,8 +22,10 @@ kotlin {
 }
 
 tasks.wrapper {
-    distributionType = Wrapper.DistributionType.ALL
     gradleVersion = properties["gradle.version"] as String
+    networkTimeout = 60_000 // milliseconds
+    distributionType = Wrapper.DistributionType.ALL
+    validateDistributionUrl = false
 }
 
 dependencies {
