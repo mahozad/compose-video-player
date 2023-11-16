@@ -11,6 +11,12 @@ import androidx.compose.ui.window.singleWindowApplication
 import java.awt.Dimension
 import java.net.URL
 
+@Preview
+@Composable
+fun AppDesktopPreview() {
+    App()
+}
+
 /**
  * NOTE: The sample.ts file is inherently out of sync.
  *  Try playing it with another player (like PotPlayer) to see.
@@ -42,21 +48,21 @@ import java.net.URL
  *   - URL("file" , "" , File("raw/sample.ts").absolutePath)
  *   - etc.
  */
-const val VIDEO_URL = "file:///raw/1.mp4"
+const val VIDEO_URL = "file:///C:\\Users\\Mahdi\\Downloads\\Video\\TEST-PATTERN-2160p60 _php_v2_230404.mp4"
 
 fun main() {
     singleWindowApplication(title = "Video Player") {
         // See https://github.com/JetBrains/compose-multiplatform/issues/2285
         window.minimumSize = Dimension(700, 560)
         MaterialTheme {
-            App()
+            Content()
         }
     }
 }
 
 @Preview
 @Composable
-fun App() {
+fun Content() {
     val state = rememberVideoPlayerState()
     /*
      * Could not use a [Box] to overlay the controls on top of the video.
