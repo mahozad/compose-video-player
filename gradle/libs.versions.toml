@@ -1,5 +1,6 @@
 [versions]
 gradle = "8.4"
+java = "17"
 compose = "1.5.4"
 compose-plugin = "1.5.10"
 compose-compiler = "1.5.4"
