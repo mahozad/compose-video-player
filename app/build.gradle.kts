@@ -8,6 +8,8 @@ plugins {
 }
 
 kotlin {
+    jvmToolchain(libs.versions.java.get().toInt())
+
     androidTarget {
         compilations.all {
             kotlinOptions {
