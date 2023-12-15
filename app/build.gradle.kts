@@ -43,6 +43,8 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            // Increases APK size by about 70 MB
+            implementation(libs.libvlc.android)
         }
         val desktopMain by getting
         desktopMain.dependencies {

@@ -17,6 +17,7 @@ androidx-espresso-core = "3.5.1"
 kotlin = "1.9.21"
 junit4 = "4.13.2"
 vlcj = "4.8.2"
+libvlc-android = "3.5.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -34,6 +35,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 vlcj = { module = "uk.co.caprica:vlcj", version.ref = "vlcj" }
+libvlc-android = { module = "org.videolan.android:libvlc-all", version.ref = "libvlc-android" }
 
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
