@@ -12,10 +12,20 @@ https://www.linkedin.com/pulse/java-media-framework-vs-javafx-api-randula-korala
 
 ## GitHub issues, PRs and discussions about video player
   - https://github.com/JetBrains/compose-multiplatform/pull/2906
+  - https://github.com/JetBrains/compose-multiplatform/pull/3336
   - https://github.com/JetBrains/compose-multiplatform/tree/master/experimental/components/VideoPlayer
   - How the GIF player was implemented in Compose Multiplatform:  
     https://github.com/JetBrains/compose-multiplatform/issues/153
-  - https://github.com/bytedeco/javacv/discussions/1956#discussioncomment-4373707
+  - https://github.com/bytedeco/javacv/discussions/1956
+  - https://github.com/caprica/vlcj/issues/1235
+  - https://github.com/JetBrains/compose-multiplatform/issues/1354
+  - https://github.com/JetBrains/compose-multiplatform/issues/2100
+  - https://github.com/JetBrains/compose-multiplatform/issues/1087
+  - https://github.com/JetBrains/compose-multiplatform/issues/1089
+  - https://github.com/JetBrains/compose-multiplatform/issues/4446
+  - https://github.com/JetBrains/compose-multiplatform/issues/3393
+  - https://github.com/JetBrains/compose-multiplatform/issues/4389
+  - https://github.com/JetBrains/compose-multiplatform/issues/4962
   - https://github.com/JetBrains/compose-multiplatform/issues/1164
   - https://github.com/JetBrains/compose-multiplatform/issues/2499
   - https://github.com/JetBrains/compose-multiplatform/issues/1951
@@ -23,6 +33,7 @@ https://www.linkedin.com/pulse/java-media-framework-vs-javafx-api-randula-korala
   - https://github.com/JetBrains/compose-multiplatform/issues/1595
   - https://github.com/JetBrains/compose-multiplatform/issues/711
   - https://github.com/JetBrains/compose-multiplatform/pull/421
+  - https://github.com/open-ani/ani/blob/master/app/shared/video-player/desktop/ui/VideoPlayer.desktop.kt
 
 ## Similar libraries
   - https://github.com/databrary/datavyu-ffmpegplugin
