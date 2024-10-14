@@ -1,3 +1,7 @@
+# Note
+For a real-world Compose Multiplatform app implementing video player,
+see https://github.com/mahozad/cutcon.
+
 ## Alternative approaches
 https://www.linkedin.com/pulse/java-media-framework-vs-javafx-api-randula-koralage/
   - Vlcj: https://github.com/caprica/vlcj
