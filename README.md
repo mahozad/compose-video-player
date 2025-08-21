@@ -8,11 +8,17 @@ https://www.linkedin.com/pulse/java-media-framework-vs-javafx-api-randula-korala
     + Recommended by Compose Multiplatform
     + Requires VLC to have been installed on the system
     + See the vlcj branch for vlcj implementation
+    + https://github.com/timo-drick/cfd_video
   - JavaFx Media player
     + Supported formats: https://openjfx.io/javadoc/19/javafx.media/javafx/scene/media/package-summary.html
   - Java Media Framework (JMF): https://www.oracle.com/java/technologies/javase/java-media-framework.html
     + Supported formats: https://www.oracle.com/java/technologies/javase/jmf-211-formats.html
   - Swing player: https://stackoverflow.com/q/52038982
+  - Skia and SKiko: https://github.com/google/skia/blob/main/experimental/ffmpeg/SkVideoDecoder.cpp
+  - FFmpeg
+    + https://github.com/timo-drick/cfd_video
+    + https://github.com/zt64/ffmpeg-kt
+  - MPV: https://github.com/zt64/mpv-kt
 
 ## GitHub issues, PRs and discussions about video player
   - https://github.com/JetBrains/compose-multiplatform/pull/2906
