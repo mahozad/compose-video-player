@@ -18,6 +18,7 @@ https://www.linkedin.com/pulse/java-media-framework-vs-javafx-api-randula-korala
   - FFmpeg
     + https://github.com/timo-drick/cfd_video
     + https://github.com/zt64/ffmpeg-kt
+    + https://github.com/CMingTseng/JVM_Android_MediaPlayer
   - MPV: https://github.com/zt64/mpv-kt
 
 ## GitHub issues, PRs and discussions about video player
